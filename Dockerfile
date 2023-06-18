@@ -8,7 +8,7 @@ RUN apt-get -q -y dist-upgrade
 RUN apt-get clean
 RUN apt-get -q update
 
-RUN apt-get -q -y install g++ git cmake meson pkg-config
+RUN apt-get -q -y install g++ git cmake autoconf automake libtool pkg-config
 RUN apt-get -q -y install zlib1g-dev libpng-dev libjpeg-dev libtiff5-dev libgdk-pixbuf2.0-dev libxml2-dev libsqlite3-dev libcairo2-dev libglib2.0-dev
 
 RUN mkdir /root/src
@@ -30,20 +30,11 @@ RUN git clone https://github.com/openslide/openslide.git
 
 ## build openslide
 WORKDIR /root/src/openslide
-# For now, use head, dicom is getting new fixes
-
-# RUN git checkout tags/v3.4.1
+RUN git checkout tags/v3.4.1
+RUN autoreconf -i
 #RUN ./configure --enable-static --enable-shared=no
 # may need to set OPENJPEG_CFLAGS='-I/usr/local/include' and OPENJPEG_LIBS='-L/usr/local/lib -lopenjp2'
 # and the corresponding TIFF flags and libs to where bigtiff lib is installed.
-
-RUN meson setup build_openslide -Ddicom=enabled
-
-# For Ubuntu newer than Focal (meson >=0.54)
-#RUN ninja compile -C build_openslide
-#RUN ninja install -C build_openslide
-
-# Otherwise:
-RUN ninja -C build_openslide
-RUN ninja -C build_openslide install
-RUN rm -r build_openslide
+RUN ./configure
+RUN make
+RUN make install
