@@ -1,0 +1,7 @@
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+
+Package: libopenslide0
+Version: 3.4.2
+Description: dummy package to disallow conflicting ones from apt
