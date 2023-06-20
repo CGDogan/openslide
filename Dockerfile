@@ -32,6 +32,11 @@ RUN git clone https://github.com/openslide/openslide.git
 WORKDIR /root/src/openslide
 # For now, use head, dicom is getting new fixes
 
+## openslide still automatically installs libdicom as a meson submodule?
+RUN test -e subprojects/libdicom.wrap
+# if not, modify this Dockerfile to install it
+# also for uthash, which is a dependency of libdicom
+
 # RUN git checkout tags/v3.4.1
 #RUN ./configure --enable-static --enable-shared=no
 # may need to set OPENJPEG_CFLAGS='-I/usr/local/include' and OPENJPEG_LIBS='-L/usr/local/lib -lopenjp2'
