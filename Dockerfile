@@ -16,7 +16,7 @@ COPY . /root/src
 WORKDIR /root/src
 
 ### openjpeg version in ubuntu 14.04 is 1.3, too old and does not have openslide required chroma subsampled images support.  download 2.3.0 from source and build
-RUN git clone https://github.com/uclouvain/openjpeg.git --branch=v2.3.0
+RUN git clone https://github.com/uclouvain/openjpeg.git --branch=v2.3.0 --depth=1
 RUN mkdir /root/src/openjpeg/build
 WORKDIR /root/src/openjpeg/build
 RUN cmake -DBUILD_JPIP=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_CODEC=ON -DBUILD_PKGCONFIG_FILES=ON ../
@@ -26,7 +26,7 @@ RUN make install
 ### Openslide
 WORKDIR /root/src
 ## get my fork from openslide source code
-RUN git clone https://github.com/openslide/openslide.git
+RUN git clone https://github.com/openslide/openslide.git --branch=main --depth=1
 
 ## build openslide
 WORKDIR /root/src/openslide
