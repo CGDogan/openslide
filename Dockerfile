@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:lunar
 
 ### update
 ARG DEBIAN_FRONTEND=noninteractive
