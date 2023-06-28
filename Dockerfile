@@ -45,8 +45,8 @@ RUN test -e subprojects/libdicom.wrap
 RUN meson setup build_openslide -Ddicom=enabled
 
 # For Ubuntu newer than Focal (meson >=0.54)
-#RUN ninja compile -C build_openslide
-#RUN ninja install -C build_openslide
+#RUN meson compile -C build_openslide
+#RUN meson install -C build_openslide
 
 # Otherwise:
 RUN ninja -C build_openslide
