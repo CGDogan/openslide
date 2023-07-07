@@ -24,12 +24,12 @@ public class BFBridge {
     private static String lastError = "";
     private static byte[] readBuffer = new byte[10000000];
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_error")
     static CCharPointer BFGetError(IsolateThread t) {
         return toCString(lastError).get();
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_open")
     static byte BFOpen(IsolateThread t, CCharPointer filePath) {
         try {
             // Use the easier resolution API
@@ -43,7 +43,7 @@ public class BFBridge {
     }
 
     // If expected to be the single file, or always true for single-file formats
-    @CEntryPoint
+    @CEntryPoint(name = "bf_is_single_file")
     static byte BFIIsSingleFile(IsolateThread t, CCharPointer filePath) {
         try {
             return toCBoolean(reader.isSingleFile(toJavaString(filePath)));
@@ -53,7 +53,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_close")
     static byte BFClose(IsolateThread t, int fileOnly) {
         try {
             reader.close(fileOnly != 0);
@@ -64,7 +64,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_resolution_count")
     static int BFGetResolutionCount(IsolateThread t) {
         try {
             // In resolution mode, each of series has a number of resolutions
@@ -77,7 +77,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_set_resolution_count")
     static byte BFSetCurrentResolution(IsolateThread t, int resIndex) {
         try {
             // Precondition: The caller must check that at least 0 and less than
@@ -90,7 +90,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_size_x")
     static int BFGetSizeX(IsolateThread t) {
         try {
             // For current resolution
@@ -101,7 +101,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_size_y")
     static int BFGetSizeY(IsolateThread t) {
         try {
             return reader.getSizeY();
@@ -111,7 +111,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_optimal_tile_Width")
     static int BFGetOptimalTileWidth(IsolateThread t) {
         try {
             return reader.getOptimalTileWidth();
@@ -121,7 +121,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_optimal_tile_height")
     static int BFGetOptimalTİleHeight(IsolateThread t) {
         try {
             return reader.getOptimalTileHeight();
@@ -131,7 +131,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_format")
     static CCharPointer BFGetFormat(IsolateThread t) {
         try {
             return toCString(reader.getFormat()).get();
@@ -141,7 +141,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_pixel_type")
     static int BFGetPixelType(IsolateThread t) {
         try {
             return reader.getPixelType();
@@ -151,7 +151,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_bits_per_pixel")
     static int BFGetBitsPerPixel(IsolateThread t) {
         try {
             return reader.getBitsPerPixel();
@@ -161,7 +161,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_bytes_per_pixel")
     static int BFGetBytesPerPixel(IsolateThread t) {
         try {
             return FormatTools.getBytesPerPixel(reader.getPixelType());
@@ -171,7 +171,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_get_rgb_channel_count")
     static int BFGetRGBChannelCount(IsolateThread t) {
         try {
             return reader.getRGBChannelCount();
@@ -181,7 +181,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_is_rgb")
     static byte BFIsRGB(IsolateThread t) {
         try {
             return toCBoolean(reader.isRGB());
@@ -191,7 +191,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_is_interleaved")
     static byte BFIsInterleaved(IsolateThread t) {
         try {
             return toCBoolean(reader.isInterleaved());
@@ -201,7 +201,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_is_little_endian")
     static byte BFIsLittleEndian(IsolateThread t) {
         try {
             return toCBoolean(reader.isLittleEndian());
@@ -211,7 +211,7 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
+    @CEntryPoint(name = "bf_is_floating_point")
     static byte BFIsFloatingPoint(IsolateThread t) {
         try {
             return toCBoolean(FormatTools.isFloatingPoint(reader));
@@ -221,8 +221,8 @@ public class BFBridge {
         }
     }
 
-    @CEntryPoint
-    static CCharPointer BFIGetDimensionOrder(IsolateThread t) {
+    @CEntryPoint(name = "bf_get_dimension_order")
+    static CCharPointer BFGetDimensionOrder(IsolateThread t) {
         try {
             return toCString(reader.getDimensionOrder()).get();
         } catch (Exception e) {
@@ -234,8 +234,8 @@ public class BFBridge {
 
     // TODO: verify that returning null pointer is OKAY
     // TODO: return a 10MB array 100 times and see if there are memory leaks
-    @CEntryPoint
-    static CCharPointer BFIOpenBytes(IsolateThread t, int x, int y, int w, int h) {
+    @CEntryPoint(name = "bf_open_bytes")
+    static CCharPointer BFOpenBytes(IsolateThread t, int x, int y, int w, int h) {
         try {
             int size = w * h * FormatTools.getBytesPerPixel(reader.getPixelType()) * reader.getRGBChannelCount();
             if (size > readBuffer.length) {
