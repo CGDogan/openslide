@@ -83,6 +83,19 @@ I added this jar nevertheless. Hence I sometimes remove `slf4j-simple.jar` again
 
 ## Building
 
+GraalVM must be a recent version. Do java -jar to see if 17.0.7+ or 20.0.2+. Otherwise you may get:
+
+```
+Exception in thread "main" java.lang.UnsatisfiedLinkError: no awt in java.library.path
+	at org.graalvm.nativeimage.builder/com.oracle.svm.core.jdk.NativeLibrarySupport.loadLibraryRelative(NativeLibrarySupport.java:136)
+	at java.base@20.0.1/java.lang.ClassLoader.loadLibrary(ClassLoader.java:50)
+	at java.base@20.0.1/java.lang.Runtime.loadLibrary0(Runtime.java:880)
+	at java.base@20.0.1/java.lang.System.loadLibrary(System.java:2051)
+	at java.desktop@20.0.1/sun.java2d.Disposer$1.run(Disposer.java:68)
+	at java.desktop@20.0.1/sun.java2d.Disposer$1.run(Disposer.java:66)
+	at java.base@20.0.1/java.security.AccessController.executePrivileged(AccessController.java:171)
+```
+
 ```
 javac -cp ".:jar_files/*" org/camicroscope/BFBridge.java
 java -cp ".:jar_files/*" org/camicroscope/BFBridge
@@ -147,3 +160,5 @@ native-image already said: AWT:  Use the tracing agent to collect metadata for A
 What to do?
 
 Is it https://github.com/graalvm/mandrel/issues/487 referring to fixed in JDK 21?
+
+very similar https://github.com/oracle/graal/issues/6244
