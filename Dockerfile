@@ -68,4 +68,6 @@ RUN mv libopenslide0 libopenslide-dev
 RUN equivs-build libopenslide-dev
 RUN dpkg -i libopenslide-dev_3.4.2_all.deb
 
+WORKDIR /
+
 RUN cd ..
