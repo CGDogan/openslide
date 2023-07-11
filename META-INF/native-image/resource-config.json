@@ -13,6 +13,18 @@
   }, {
     "pattern":".*/writers.txt"
   }, {
+    "pattern":"*/lib/*/*.dylib"
+  }, {
+    "pattern":"*/lib/*/*.dll"
+  }, {
+    "pattern":"*/lib/*/*.so"
+  }, {
+    "pattern":"\\QMETA-INF/lib/osx_arm64/libturbojpeg.dylib\\E"
+  }, {
+    "pattern":"\\QMETA-INF/lib/linux_64/libturbojpeg.so\\E"
+  }, {
+    "pattern":"\\QMETA-INF/lib/linux_arm64/libturbojpeg.so\\E"
+  }, {
     "pattern":"\\Qloci/common/services/services.properties\\E"
   }, {
     "pattern":"\\Qloci/formats/FormatTools.class\\E"

@@ -4,6 +4,9 @@
   "fields":[{"name":"threadLocalRandomProbe"}]
 },
 {
+  "name":"java.security.SecureRandomParameters"
+},
+{
   "name":"java.util.concurrent.atomic.AtomicBoolean",
   "fields":[{"name":"value"}]
 },
@@ -819,5 +822,13 @@
 },
 {
   "name":"ome.codecs.services.LuraWaveServiceImpl"
+},
+{
+  "name":"sun.security.provider.NativePRNG",
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"<init>","parameterTypes":["java.security.SecureRandomParameters"] }]
+},
+{
+  "name":"sun.security.provider.SHA",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
 }
 ]
