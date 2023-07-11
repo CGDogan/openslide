@@ -81,6 +81,10 @@ But instead of this, we could have used 130% more space and used bioformats_pack
 
 I added this jar nevertheless. Hence I sometimes remove `slf4j-simple.jar` against loggers competing.
 
+I also added bio-formats-tools.jar from artifacts. This is now required for generating subresolutions. If you want to run this, you can do `java -cp ".:jar_files/*"  loci.formats.tools.ImageConverter` or with ...ImageInfo
+
+No, I removed bio-formats-tools.jar now because the package already contains it and the same command works.
+
 ## Building
 
 GraalVM must be a recent version. Do java -jar to see if 17.0.7+ or 20.0.2+. Otherwise you may get:
